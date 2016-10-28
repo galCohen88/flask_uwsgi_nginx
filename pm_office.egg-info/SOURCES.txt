@@ -1,0 +1,11 @@
+setup.py
+client/__init__.py
+client/cli.py
+pm_office.egg-info/PKG-INFO
+pm_office.egg-info/SOURCES.txt
+pm_office.egg-info/dependency_links.txt
+pm_office.egg-info/requires.txt
+pm_office.egg-info/top_level.txt
+server/__init__.py
+server/config.py
+server/files_server.py
