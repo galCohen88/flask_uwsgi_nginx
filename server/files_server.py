@@ -4,28 +4,43 @@ from server.config import config
 import os
 
 from werkzeug.utils import secure_filename
+from flask_hmacauth import hmac_auth, DictAccountBroker, HmacManager
 
 app = Flask(__name__)
 
 
+accountmgr = DictAccountBroker(
+    accounts={
+        "admin": {"secret": ";hi^897t7utf", "rights": ["connect", "list", "get", "put"]},
+        "editor": {"secret": "afstr5afewr", "rights": ["connect", "list", "get"]},
+        "guest": {"secret": "ASDFjoiu%i", "rights": ["connect", "list"]}
+    })
+
+hmacmgr = HmacManager(accountmgr, app)
+
+
 @app.route('/connect')
+@hmac_auth('connect')
 def connect():
     return jsonify({'success': True})
 
 
 @app.route('/list')
+@hmac_auth('list')
 def files_list():
     files = os.listdir("files")
     return jsonify({'files': files})
 
 
 @app.route('/get')
+@hmac_auth('get')
 def get_file():
     file_name = request.args.get('file_name')
     return send_from_directory('files', file_name)
 
 
 @app.route('/put', methods=['POST'])
+@hmac_auth('put')
 def put_file():
     files = request.files
     saved_files = 0
