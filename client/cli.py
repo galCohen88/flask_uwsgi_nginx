@@ -8,7 +8,7 @@ import time
 from requests import ConnectionError
 
 CLIENT_SECRET = ';hi^897t7utf'
-ACCOUNT_ID = "ACCOUNT_ID=admin"
+ACCOUNT_ID = "admin"
 
 
 def _list(base_url, args):
@@ -54,12 +54,13 @@ def _connect(ip, port):
         r = requests.get(base_url + route, headers={'X-Auth-Signature': hmac_sig})
     except ConnectionError:
         print 'Error connecting to server'
-        return None
-    if r.status_code == 200:
-        print 'connected'
-    elif r.status_code == 403:
-        print 'could not connect to server, please  check credentials'
-        return None
+        return
+
+    if r.status_code != 200:
+        print 'could not connect to server, please  check credentials \n status code: %s' % r.status_code
+        return
+
+    print 'connection established'
     return base_url
 
 

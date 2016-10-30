@@ -19,6 +19,11 @@ accountmgr = DictAccountBroker(
 hmacmgr = HmacManager(accountmgr, app)
 
 
+@app.route('/state')
+def state():
+    return jsonify({'state': 'Running'})
+
+
 @app.route('/connect')
 @hmac_auth('connect')
 def connect():
