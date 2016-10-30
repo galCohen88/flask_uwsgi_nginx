@@ -8,7 +8,7 @@ import time
 from requests import ConnectionError
 
 CLIENT_SECRET = ';hi^897t7utf'
-
+ACCOUNT_ID = "ACCOUNT_ID=admin"
 
 def _list(base_url, args):
     route = '/list'
@@ -66,8 +66,9 @@ mapping = {'list': _list, 'get': _get, 'put': _put}
 
 
 def _create_hmac_signature(method, query_string, data=None):
-    msg = query_string + "?TIMESTAMP="+str(int(time.time())) + "&ACCOUNT_ID=admin"
-    # create copy..
+    msg = query_string + "?TIMESTAMP={ts}&ACCOUNT_ID={aid}".format(ts=str(int(time.time())),
+                                                                   aid=ACCOUNT_ID)
+
     route = str(msg)
     if data is not None and method == 'POST':
         msg += json.dumps(data)
