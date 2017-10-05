@@ -1,6 +1,6 @@
 import random
 import geopy.distance
-from drone.consts import SENSOR_MODE_PASSIVE_DETECTING, SENSOR_MODE_PASSIVE_TRACKING
+from drone.consts import SENSOR_MODE_PASSIVE_DETECTING, SENSOR_MODE_PASSIVE_TRACKING, SENSOR_MODE_ACTIVE
 from drone.geo_base import GeoEntity
 from drone.utils import random_str
 import math
@@ -47,6 +47,10 @@ class Sensor(GeoEntity):
         time_delta = last_position.sample_time - previous_position.sample_time
         self.velocity_vector = VelocityVector(previous_position.latitude, previous_position.longitude,
                                               last_position.latitude, last_position.longitude, time_delta)
+
+    def land_drone(self):
+        self.mode = SENSOR_MODE_ACTIVE
+        # do magic
 
 
 class LandingSite(GeoEntity):

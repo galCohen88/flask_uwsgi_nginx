@@ -18,13 +18,15 @@ def listen():
 
         for idx in detection_sensors:
             if is_a_threat(sensors[idx]):
-                handle_threat()
+                handle_threat(sensors[idx])
 
-def handle_threat():
-    
+
+def handle_threat(sensor):
+    sensor.land_drone()
+
+
 def choose_sensor(all_sensors_detected_the_threat):
-    "policy - the active sensor is the closest one to the base - taking over only once"
-    "at what stage should the sensor take over? when the drone is considered a threat"
+    pass
 
 
 def is_a_threat(sensor):
@@ -33,6 +35,6 @@ def is_a_threat(sensor):
     drone_distance_from_sensor = sensor.calculate_distance_from_object(sensor.tracked_drone_movement[-1])
     velocity_vector = sensor.velocity_vector
 
-    if 'bearing and speed considered a threat':
+    if 'bearing, speed and distance considered a threat':
         return True
     return False
