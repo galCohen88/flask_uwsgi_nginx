@@ -1,6 +1,6 @@
 import random
 import geopy.distance
-from drone.consts import SENSOR_MODE_PASSIVE
+from drone.consts import SENSOR_MODE_PASSIVE_DETECTING, SENSOR_MODE_PASSIVE_TRACKING
 from drone.geo_base import GeoEntity
 from drone.utils import random_str
 import math
@@ -14,7 +14,7 @@ class Drone(GeoEntity):
 
 
 class Sensor(GeoEntity):
-    def __init__(self,  latitude, longitude, mode=SENSOR_MODE_PASSIVE):
+    def __init__(self,  latitude, longitude, mode=SENSOR_MODE_PASSIVE_DETECTING):
         GeoEntity.__init__(self, latitude, longitude)
         self.mode = mode
         self.id = random_str()
@@ -29,7 +29,9 @@ class Sensor(GeoEntity):
             pass
 
         while 'drone detected':
+            self.mode = SENSOR_MODE_PASSIVE_TRACKING
             # event of drone detection - random position..
+
             sample_time = random.uniform(0, 50.0)
             lat1 = random.uniform(0, 50.0)
             lon1 = random.uniform(0, 50.0)
